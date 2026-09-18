@@ -1,148 +1,139 @@
 <!doctype html>
 <html lang="ur" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ٹک ٹاک اینالیٹکس</title>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#f4f5f8;color:#17181c;font-family:Arial,"Noto Naskh Arabic",sans-serif}
-.wrap{max-width:720px;margin:auto;padding:18px}.top{background:#111217;color:white;border-radius:22px;padding:22px;margin-bottom:14px}
-.small{color:#ff4b78;font-weight:bold;font-size:12px}.top h1{margin:7px 0;font-size:25px}.top p{margin:0;color:#c8c9ce;font-size:13px}
-.search{background:white;padding:10px;border-radius:16px;display:flex;gap:8px;margin-bottom:14px}.search input{min-width:0;flex:1;padding:13px;border:1px solid #ddd;border-radius:10px;direction:ltr;font-size:15px}.search button,.pdf{border:0;border-radius:10px;padding:12px 15px;font-weight:bold;background:#ff2d61;color:white}
-.profile,.card,.panel{background:white;border-radius:17px;padding:16px;margin-bottom:12px}.profile{display:flex;gap:12px;align-items:center}.avatar{width:50px;height:50px;border-radius:50%;background:#111;color:white;display:grid;place-items:center;font-size:21px;font-weight:bold}.profile h2{margin:0 0 3px;font-size:19px}.handle{color:#777;direction:ltr;display:block}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card span{font-size:12px;color:#777}.card b{display:block;font-size:22px;margin-top:5px}
-.panel h3{margin:0 0 12px}.bar{margin:10px 0}.barline{height:11px;background:#eceef2;border-radius:20px;overflow:hidden}.barline i{display:block;height:100%;background:#ff2d61;border-radius:20px}.bar label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}
-table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:10px 5px;border-bottom:1px solid #eee;text-align:right}th{color:#777}.pdf{width:100%;margin-top:4px;background:#17181d}
-.note{font-size:11px;color:#777;text-align:center;margin:15px 0}
-@media(max-width:430px){.search button{padding:11px 10px}.top h1{font-size:22px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TikTok Analytics & Report Generator</title>
+  <style>
+    *{box-sizing:border-box}
+    :root{--ink:#17181c;--muted:#70727a;--pink:#ff2d61;--bg:#f4f5f8;--line:#e5e6ea}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Noto Naskh Arabic",sans-serif}
+    .wrap{max-width:760px;margin:auto;padding:18px}
+    .top{background:#111217;color:#fff;border-radius:22px;padding:22px;margin-bottom:14px}
+    .small{color:#ff4b78;font-weight:700;font-size:12px;letter-spacing:.5px}
+    h1{margin:7px 0;font-size:25px}.top p{margin:0;color:#c8c9ce;font-size:13px}
+    .search,.profile,.card,.panel{background:#fff;border-radius:17px;padding:16px;margin-bottom:12px}
+    .search{display:flex;gap:8px}.search input{min-width:0;flex:1;direction:ltr}
+    input,select,textarea{font:inherit;padding:12px;border:1px solid #ccc;border-radius:10px;width:100%;background:#fff}
+    button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:12px 16px;font-weight:700}
+    .primary{background:var(--ink);color:#fff}.search button{background:var(--pink);color:#fff;white-space:nowrap}
+    .profile{display:flex;gap:12px;align-items:center}.avatar{width:50px;height:50px;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:700}
+    .profile h2{margin:0 0 3px;font-size:20px}.handle{color:var(--muted);direction:ltr;display:inline-block}
+    .cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card span{font-size:12px;color:var(--muted)}.card b{display:block;font-size:22px;margin-top:5px}
+    .panel h3{margin:0 0 12px}.bar{margin:10px 0}.bar label{display:flex;justify-content:space-between;font-size:12px}.barline{height:11px;background:#eceef2;border-radius:20px;overflow:hidden;margin-top:5px}.barline i{display:block;height:100%;background:var(--pink);border-radius:20px}
+    table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:10px 5px;border-bottom:1px solid #eee;text-align:right}th{color:var(--muted)}
+    .pdf{width:100%;background:var(--ink);color:#fff;margin:2px 0 12px}.note{font-size:11px;color:var(--muted);text-align:center;margin:15px 0}
+    .report h2{margin-top:0}.report label{display:block;margin-top:12px;margin-bottom:6px;font-size:13px;font-weight:700}
+    .report-actions{display:grid;gap:10px;margin-top:14px}.secondary{background:#eee;color:var(--ink)}
+    .preview{display:none;margin-top:14px;padding:14px;border-radius:10px;background:#f5f5f5;white-space:pre-wrap;direction:ltr;text-align:left;border:1px solid var(--line)}
+    @media(max-width:430px){.search button{padding:11px 10px}.top h1{font-size:22px}}
+    @media print{.search,.report,.pdf,.note{display:none!important}.wrap{max-width:none}.top{color:#000;background:#fff;border:1px solid #ddd}}
+  </style>
 </head>
-<body><div class="wrap">
-<div class="top"><div class="small">TIKTOK ANALYTICS</div><h1>رپورٹ اور تجزیاتی ڈیش بورڈ</h1><p>صارف نام درج کریں اور اپنی معلومات دیکھیں۔</p></div>
-<div class="search"><input id="u" value="@demo_creator" placeholder="@username"><button onclick="go()">تجزیہ کریں</button></div>
-<div class="profile"><div class="avatar" id="a">D</div><div><h2 id="name">Demo Creator</h2><span class="handle" id="handle">@demo_creator</span></div></div>
-<div class="cards">
-<div class="card"><span>فالوورز</span><b>125.4K</b></div><div class="card"><span>کل لائکس</span><b>2.8M</b></div>
-<div class="card"><span>کل ویڈیوز</span><b>48</b></div><div class="card"><span>Avg. ویوز</span><b>91.9K</b></div>
-</div>
-<div class="panel"><h3>ویوز — آخری 7 ویڈیوز</h3>
-<div id="bars"></div></div>
-<div class="panel"><h3>ویڈیو تجزیہ</h3>
-<table><thead><tr><th>ویڈیو</th><th>ویوز</th><th>لائکس</th><th>Eng.</th></tr></thead><tbody id="rows"></tbody></table></div>
-<button class="pdf" onclick="pdf()">📄 پی ڈی ایف رپورٹ بنائیں</button>
-<div class="note">Demo mode: اصل TikTok ڈیٹا کے لیے authorized TikTok API/backend درکار ہے۔</div>
-</div>
-<script>
-const data=[
-["Morning routine ✨",182000,21600],["3 editing tips",121000,14300],["Behind the scenes",98000,11200],
-["New trend challenge",76000,8900],["Quick tutorial",65000,7200],["Creator Q&A",54000,6100],["Weekend vlog",47000,5300]];
-const f=n=>n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?(n/1e3).toFixed(n>=1e5?0:1)+"K":n;
-function go(){let x=document.getElementById("u").value.trim()||"@demo_creator";if(x[0]!=="@")x="@"+x;document.getElementById("handle").textContent=x;document.getElementById("name").textContent=x==="@demo_creator"?"Demo Creator":x.slice(1);document.getElementById("a").textContent=(x.replace("@","")[0]||"D").toUpperCase()}
-function render(){document.getElementById("bars").innerHTML=data.map((v,i)=>`<div class="bar"><label><span>Video ${i+1}</span><span>${f(v[1])}</span></label><div class="barline"><i style="width:${v[1]/182000*100}%"></i></div></div>`).join("");document.getElementById("rows").innerHTML=data.map(v=>`<tr><td>${v[0]}</td><td>${f(v[1])}</td><td>${f(v[2])}</td><td>${(v[2]/v[1]*100).toFixed(1)}%</td></tr>`).join("")}
-function pdf(){window.print()}
-render();
-</script>
-<section class="card" style="margin-top:16px;">
-  <h2>📋 Auto Report Generator</h2>
-  <p style="opacity:.8;">Username درج کریں، رپورٹ کی وجہ منتخب کریں اور رپورٹ تیار کریں۔ یہ ٹول رپورٹ کو خودکار طور پر تیار کرتا ہے؛ کسی اکاؤنٹ پر خودکار یا بار بار report submit نہیں کرتا۔</p>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div class="small">TIKTOK ANALYTICS</div>
+      <h1>رپورٹ اور تجزیاتی ڈیش بورڈ</h1>
+      <p>صارف نام درج کریں اور اپنی معلومات دیکھیں۔</p>
+    </header>
 
-  <label for="reportUsername">TikTok Username</label>
-  <input id="reportUsername" type="text" placeholder="@username">
+    <section class="search">
+      <input id="u" value="@demo_creator" placeholder="@username" aria-label="TikTok username">
+      <button type="button" onclick="go()">تجزیہ کریں</button>
+    </section>
 
-  <label for="reportReason" style="display:block;margin-top:12px;">Report کی وجہ</label>
-  <select id="reportReason" style="width:100%;padding:12px;border-radius:10px;border:1px solid #ccc;">
-    <option value="Spam">Spam</option>
-    <option value="Harassment or bullying">Harassment or bullying</option>
-    <option value="Impersonation">Impersonation</option>
-    <option value="Scam or fraud">Scam or fraud</option>
-    <option value="Other">Other</option>
-  </select>
+    <section class="profile">
+      <div class="avatar" id="a">D</div>
+      <div><h2 id="name">Demo Creator</h2><span class="handle" id="handle">@demo_creator</span></div>
+    </section>
 
-  <label for="reportEvidence" style="display:block;margin-top:12px;">Evidence / تفصیل</label>
-  <textarea id="reportEvidence" rows="4" placeholder="مسئلے کی مختصر تفصیل لکھیں..." style="width:100%;padding:12px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box;"></textarea>
+    <section class="cards">
+      <div class="card"><span>فالوورز</span><b>125.4K</b></div>
+      <div class="card"><span>کل لائکس</span><b>2.8M</b></div>
+      <div class="card"><span>کل ویڈیوز</span><b>48</b></div>
+      <div class="card"><span>Avg. ویوز</span><b>91.9K</b></div>
+    </section>
 
-  <button onclick="generateAutoReport()" style="margin-top:14px;width:100%;padding:13px;border:0;border-radius:10px;background:#111;color:#fff;font-weight:700;">
-    ⚡ Auto Report تیار کریں
-  </button>
+    <section class="panel"><h3>ویوز — آخری 7 ویڈیوز</h3><div id="bars"></div></section>
+    <section class="panel"><h3>ویڈیو تجزیہ</h3>
+      <div style="overflow-x:auto"><table><thead><tr><th>ویڈیو</th><th>ویوز</th><th>لائکس</th><th>Eng.</th></tr></thead><tbody id="rows"></tbody></table></div>
+    </section>
+    <button class="pdf" type="button" onclick="window.print()">📄 پی ڈی ایف رپورٹ بنائیں</button>
 
-  <button onclick="downloadReportText()" id="downloadReportBtn" style="display:none;margin-top:10px;width:100%;padding:13px;border:0;border-radius:10px;background:#eee;color:#111;font-weight:700;">
-    ⬇️ Report فائل محفوظ کریں
-  </button>
-  <button onclick="resetReportGenerator()" id="resetReportBtn" style="display:none;margin-top:10px;width:100%;padding:13px;border:0;border-radius:10px;background:#eee;color:#111;font-weight:700;">
-    🔄 دوبارہ رپورٹ تیار کریں
-  </button>
-  <button onclick="submitReport()" id="submitReportBtn" style="display:none;margin-top:10px;width:100%;padding:13px;border:0;border-radius:10px;background:#111;color:#fff;font-weight:700;">
-    📤 TikTok Submit / Report کھولیں
-  </button>
+    <section class="card report">
+      <h2>📋 Auto Report Generator</h2>
+      <p style="opacity:.8">Username درج کریں، وجہ منتخب کریں اور رپورٹ تیار کریں۔ یہ tool صرف رپورٹ کا draft بناتا ہے؛ submit آپ TikTok کے official process سے خود کریں۔</p>
+      <label for="reportUsername">TikTok Username</label>
+      <input id="reportUsername" type="text" placeholder="@username">
+      <label for="reportReason">Report کی وجہ</label>
+      <select id="reportReason">
+        <option>Spam</option><option>Harassment or bullying</option><option>Impersonation</option><option>Scam or fraud</option><option>Other</option>
+      </select>
+      <label for="reportEvidence">Evidence / تفصیل</label>
+      <textarea id="reportEvidence" rows="4" placeholder="مسئلے کی مختصر تفصیل لکھیں..."></textarea>
+      <div class="report-actions">
+        <button class="primary" type="button" onclick="generateAutoReport()">⚡ Auto Report تیار کریں</button>
+        <button class="secondary" type="button" onclick="downloadReportText()" id="downloadReportBtn" hidden>⬇️ Report فائل محفوظ کریں</button>
+        <button class="secondary" type="button" onclick="resetReportGenerator()" id="resetReportBtn" hidden>🔄 دوبارہ رپورٹ تیار کریں</button>
+        <button class="primary" type="button" onclick="submitReport()" id="submitReportBtn" hidden>📤 TikTok official reporting کھولیں</button>
+      </div>
+      <div id="reportPreview" class="preview"></div>
+    </section>
+    <div class="note">Demo mode: اصل TikTok ڈیٹا کے لیے authorized TikTok API/backend درکار ہے۔</div>
+  </main>
 
-  <div id="reportPreview" style="display:none;margin-top:14px;padding:14px;border-radius:10px;background:#f5f5f5;white-space:pre-wrap;"></div>
-</section>
+  <script>
+    const data = [
+      ["Morning routine ✨",182000,21600],["3 editing tips",121000,14300],
+      ["Behind the scenes",98000,11200],["New trend challenge",76000,8900],
+      ["Quick tutorial",65000,7200],["Creator Q&A",54000,6100],["Weekend vlog",47000,5300]
+    ];
+    const formatNumber = n => n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? (n/1e3).toFixed(n >= 1e5 ? 0 : 1)+"K" : String(n);
+    const esc = value => String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 
-<script>
+    function go(){
+      let username = document.getElementById("u").value.trim() || "@demo_creator";
+      if (!username.startsWith("@")) username = "@" + username;
+      document.getElementById("handle").textContent = username;
+      document.getElementById("name").textContent = username === "@demo_creator" ? "Demo Creator" : username.slice(1);
+      document.getElementById("a").textContent = (username.replace("@","")[0] || "D").toUpperCase();
+    }
+    function render(){
+      const max = data[0][1];
+      document.getElementById("bars").innerHTML = data.map((v,i) => `<div class="bar"><label><span>Video ${i+1}</span><span>${formatNumber(v[1])}</span></label><div class="barline"><i style="width:${Math.round(v[1]/max*100)}%"></i></div></div>`).join("");
+      document.getElementById("rows").innerHTML = data.map(v => `<tr><td>${esc(v[0])}</td><td>${formatNumber(v[1])}</td><td>${formatNumber(v[2])}</td><td>${((v[2]/v[1])*100).toFixed(1)}%</td></tr>`).join("");
+    }
 
-let generatedReport = "";
-
-function generateAutoReport() {
-  const username = document.getElementById("reportUsername").value.trim();
-  const reason = document.getElementById("reportReason").value;
-  const evidence = document.getElementById("reportEvidence").value.trim();
-
-  if (!username) {
-    alert("براہِ کرم TikTok username درج کریں۔");
-    return;
-  }
-
-  const cleanUser = username.startsWith("@") ? username : "@" + username;
-  const now = new Date().toLocaleString();
-
-  generatedReport =
-`TikTok Report
-====================
-Username: ${cleanUser}
-Reason: ${reason}
-Date: ${now}
-
-Evidence / Description:
-${evidence || "کوئی اضافی تفصیل فراہم نہیں کی گئی۔"}
-
-نوٹ:
-یہ رپورٹ خودکار طور پر تیار کی گئی ہے۔ اسے TikTok کے official reporting process میں صارف خود submit کرے۔`;
-
-  document.getElementById("reportPreview").textContent = generatedReport;
-  document.getElementById("reportPreview").style.display = "block";
-  document.getElementById("downloadReportBtn").style.display = "block";
-  document.getElementById("resetReportBtn").style.display = "block";
-  document.getElementById("submitReportBtn").style.display = "block";
-}
-
-function submitReport() {
-  if (!generatedReport) {
-    alert("پہلے Auto Report تیار کریں۔");
-    return;
-  }
-  window.open("https://support.tiktok.com/en/search?searchTerm=report%20an%20account", "_blank");
-}
-
-function resetReportGenerator() {
-  document.getElementById("reportUsername").value = "";
-  document.getElementById("reportEvidence").value = "";
-  document.getElementById("reportReason").selectedIndex = 0;
-  document.getElementById("reportPreview").style.display = "none";
-  document.getElementById("downloadReportBtn").style.display = "none";
-  document.getElementById("resetReportBtn").style.display = "none";
-  document.getElementById("submitReportBtn").style.display = "none";
-  generatedReport = "";
-}
-
-function downloadReportText() {
-  if (!generatedReport) return;
-  const blob = new Blob([generatedReport], {type: "text/plain;charset=utf-8"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "tiktok-report.txt";
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-</script>
-</body></html>
+    let generatedReport = "";
+    function generateAutoReport(){
+      const username = document.getElementById("reportUsername").value.trim();
+      if (!username) { alert("براہِ کرم TikTok username درج کریں۔"); return; }
+      const cleanUser = username.startsWith("@") ? username : "@" + username;
+      const reason = document.getElementById("reportReason").value;
+      const evidence = document.getElementById("reportEvidence").value.trim();
+      generatedReport = `TikTok Report\n====================\nUsername: ${cleanUser}\nReason: ${reason}\nDate: ${new Date().toLocaleString()}\n\nEvidence / Description:\n${evidence || "کوئی اضافی تفصیل فراہم نہیں کی گئی۔"}\n\nنوٹ:\nیہ رپورٹ draft کے طور پر تیار کی گئی ہے۔ اسے TikTok کے official reporting process میں خود submit کریں۔`;
+      const preview = document.getElementById("reportPreview");
+      preview.textContent = generatedReport; preview.style.display = "block";
+      ["downloadReportBtn","resetReportBtn","submitReportBtn"].forEach(id => document.getElementById(id).hidden = false);
+    }
+    function submitReport(){
+      if (!generatedReport) { alert("پہلے Auto Report تیار کریں۔"); return; }
+      window.open("https://support.tiktok.com/en/safety-hc/account-and-user-safety/report-a-problem", "_blank", "noopener");
+    }
+    function resetReportGenerator(){
+      ["reportUsername","reportEvidence"].forEach(id => document.getElementById(id).value = "");
+      document.getElementById("reportReason").selectedIndex = 0;
+      document.getElementById("reportPreview").style.display = "none";
+      ["downloadReportBtn","resetReportBtn","submitReportBtn"].forEach(id => document.getElementById(id).hidden = true);
+      generatedReport = "";
+    }
+    function downloadReportText(){
+      if (!generatedReport) return;
+      const url = URL.createObjectURL(new Blob([generatedReport], {type:"text/plain;charset=utf-8"}));
+      const link = document.createElement("a"); link.href = url; link.download = "tiktok-report.txt"; link.click(); URL.revokeObjectURL(url);
+    }
+    render();
+  </script>
+</body>
+</html>
